@@ -79,9 +79,17 @@ flutter:
      - assets/images/intro_image.png
      - assets/images/intro_image_D.png
      - assets/images/Login_logo.png
+     - assets/images/birthday.png
+     - assets/images/book_club.png
+     - assets/images/eating.png
+     - assets/images/gaming.png
+     - assets/images/exhibtion.png
+     - assets/images/holiday.png
+     - assets/images/sport.png
+     - assets/images/workshop.png
+     - assets/images/meeting.png
      - assets/images/forget_password.png
      - assets/translations/
-
 
   # An image asset can refer to one or more resolution-spec.ific "variants", see
   # https://flutter.dev/to/resolution-aware-images

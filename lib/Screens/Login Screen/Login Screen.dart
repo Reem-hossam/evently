@@ -1,5 +1,11 @@
 import 'package:evently/Screens/Login%20Screen/forget_password.dart';
+import 'package:evently/Screens/Login%20Screen/register.dart';
 import 'package:flutter/material.dart%20';
+import 'package:provider/provider.dart';
+
+import '../../firebase_manager/fierbase_manager.dart';
+import '../../home/home.dart';
+import '../../provider/user_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName="LoginScreen";
@@ -9,6 +15,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -52,12 +59,52 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 24,
             ),
-            ElevatedButton(onPressed: (){},
+            ElevatedButton(onPressed: (){
+              FirebaseManager.login(
+                emailController.text,
+                passwordController.text,
+                    () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const AlertDialog(
+                      title: Center(child: CircularProgressIndicator()),
+                      backgroundColor: Colors.transparent,
+                    ),
+                  );
+                },
+                    () async {
+                  Navigator.pop(context);
+                  await userProvider.initUser();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    HomeScreen.routeName,
+                        (route) => false,
+                  );
+                },
+                    (message) {
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => AlertDialog(
+                      title: const Text("Something went Wrong"),
+                      content: Text(message),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Ok"))
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical:16,horizontal: 154),
-
                   backgroundColor: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14))),
@@ -72,7 +119,7 @@ class LoginScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-
+                Navigator.pushNamed(context, RegisterScreen.routeName);
               },
               child: Text.rich(
                 textAlign: TextAlign.center,
@@ -127,7 +174,6 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 }
