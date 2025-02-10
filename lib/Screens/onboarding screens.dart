@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:evently/Screens/Login%20Screen/Login%20Screen.dart';
-import 'package:evently/Screens/lets%20go%20screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+
+import 'Login Screen/Login Screen.dart';
 class Onboarding extends StatelessWidget {
   static const String routeName="Onboarding";
   const Onboarding({super.key});

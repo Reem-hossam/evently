@@ -2,15 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 import '../../firebase_manager/fierbase_manager.dart';
 import '../../models/task_model.dart';
 import '../../provider/add_event_provider.dart';
 import '../event category.dart';
 
-class CreateEvent extends StatelessWidget {
+class AddEventsScreen extends StatelessWidget {
   static const String routeName = "AddEvent";
 
-  CreateEvent({super.key});
+  AddEventsScreen({super.key});
 
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
@@ -148,13 +149,3 @@ class CreateEvent extends StatelessWidget {
     );
   }
 }
-
-/// Select all FROM TABLE_NAME
-/// INSERT INTO TABLE_NAME
-/// DELETE
-/// UPDATE
-///
-///
-/// SQFLite  vs SQL
-///
-/// flutterfire configure --project=todo-c13-monday --android-app-id=com.example.todo_c13_monday

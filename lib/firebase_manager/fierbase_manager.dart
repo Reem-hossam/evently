@@ -1,12 +1,9 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../models/task_model.dart';
 import '../models/user_model.dart';
-
 
 class FirebaseManager {
   static CollectionReference<TaskModel> getTaskCollection() {

@@ -34,7 +34,7 @@ class RegisterScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Image.asset(
-                    "assets/images/Login_logo.png",
+                    "assets/images/login_image.png",
                     width: 136,
                     height: 186,
                   ),

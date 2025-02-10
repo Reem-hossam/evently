@@ -1,61 +1,84 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import '../firebase_manager/fierbase_manager.dart';
+import '../models/task_model.dart';
+
 class EditEventScreen extends StatefulWidget {
-  static const String routeName="EditEventScreen";
+  static const String routeName = "EditEvent";
+
   @override
   _EditEventScreenState createState() => _EditEventScreenState();
 }
 
 class _EditEventScreenState extends State<EditEventScreen> {
-  TextEditingController titleController = TextEditingController(text: "Reading Book Club");
-  TextEditingController descriptionController = TextEditingController(text: "Lorem ipsum dolor sit...");
+  late TextEditingController titleController;
+  late TextEditingController descriptionController;
+  late TaskModel task;
+
 
   @override
   Widget build(BuildContext context) {
+    task = ModalRoute.of(context)!.settings.arguments as TaskModel;
+    titleController = TextEditingController(text: task!.title);
+    descriptionController = TextEditingController(text: task!.description);
+
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Event')),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset('assets/book_club.png', height: 150, fit: BoxFit.cover),
-            SizedBox(height: 10),
-            TextField(
-              controller: titleController,
-              decoration: InputDecoration(labelText: 'Title'),
-            ),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
-              maxLines: 3,
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Icon(Icons.calendar_today, size: 16),
-                SizedBox(width: 5),
-                Text('30 November 2024 - 11:22PM'),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(Icons.location_on, size: 16),
-                SizedBox(width: 5),
-                Text('Cairo, Egypt'),
-              ],
-            ),
-            Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                // هتضيف هنا كود التحديث في Firebase أو Local DB
-              },
-              child: Text('Update Event'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50),
+      appBar: AppBar(title: Text("Edit Event",style: Theme.of(context).textTheme.titleMedium!.copyWith(color:Theme.of(context).primaryColor))),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(36),
+                child: Image.asset(
+                  "assets/images/${task.category}.png",
+                  height: 225,
+                ),
               ),
-            ),
-          ],
+              Align(alignment: Alignment.topLeft,
+                  child: Text("Title")),
+              TextField(
+                controller: titleController,
+                decoration: InputDecoration(
+                  hintText: "Title",
+                  prefixIcon: Icon(Icons.edit_note),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Align(alignment: Alignment.topLeft,
+                  child: Text("description")),
+              TextField(
+                controller: descriptionController,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  hintText: "Description",
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+
+              ElevatedButton(
+                onPressed: () {
+                  task.title = titleController.text;
+                  task.description = descriptionController.text;
+                  FirebaseManager.updateEvent(task);
+                  Navigator.pop(context);
+                },
+                child: Text("Uptade Event",style: TextStyle(color: Colors.white),),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 152),
+                  backgroundColor: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),),
+              ),
+            ],
+          ),
         ),
       ),
     );

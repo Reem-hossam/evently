@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ForgetPassword extends StatelessWidget {
-  static const String routeName = "ForgetPassword";
+  static const String routeName = "forget-password";
   TextEditingController emailController = TextEditingController();
 
   ForgetPassword({super.key});
@@ -10,7 +10,10 @@ class ForgetPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Forget Password", style: Theme.of(context).textTheme.titleMedium,),
+        title: Text(
+          "Forget Password",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
